@@ -11,15 +11,34 @@
 # -- get_description returns formats for stocks and bonds
 # For stocks: "Ticker: Company -- $Price"
 # For bonds: "description: duration'yr' : $price : yieldamt%"
+from abc import ABC, abstractmethod
+class Asset(ABC):
+    def __init__(self,price):
+        super().__init__()
+        self.price=price
 
-class Asset():
-    pass
+    @abstractmethod
+    def get_description(self):
+        pass
 
-class Stock():
-    pass
+class Stock(Asset):
+    def __init__(self, ticker, price, companyName):
+        super().__init__(price)
+        self.companyName = companyName
+        self.ticker = ticker
+    
+    def get_description(self):
+        return f'{self.ticker}:{self.companyName} --${str(self.price)}'
 
-class Bond():
-    pass
+class Bond(Asset):
+    def __init__(self, price, desc, dur, yld):
+        super().__init__(price)
+        self.desc = desc
+        self.dur = dur
+        self.yld = yld
+    
+    def get_description(self):
+        return f'{self.desc}:{self.dur}\'yr\' : ${str(self.price)} : {self.yld}%'
 
 
 # ~~~~~~~~~ TEST CODE ~~~~~~~~~

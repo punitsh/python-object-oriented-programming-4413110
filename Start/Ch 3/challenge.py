@@ -16,13 +16,18 @@ class Asset(ABC):
     def __str__(self):
         pass
 
+    def __lt__(self,stock):
+        return self.price<stock.price
+
 
 class Stock(Asset):
     def __init__(self, ticker, price, company):
         super().__init__(price)
         self.company = company
         self.ticker = ticker
-
+    
+    def __str__(self):
+        return f'Company:{self.company},Ticker:{self.ticker},Price:{self.price}'
 
 class Bond(Asset):
     def __init__(self, price, description, duration, yieldamt):
@@ -31,6 +36,8 @@ class Bond(Asset):
         self.duration = duration
         self.yieldamt = yieldamt
 
+    def __str__(self):
+        return f'description:{self.description},duration:{self.duration},Price:{self.price}'
 
 # ~~~~~~~~~ TEST CODE ~~~~~~~~~
 stocks = [
